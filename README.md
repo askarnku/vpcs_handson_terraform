@@ -22,25 +22,13 @@ Before you begin, ensure you have the following:
 
 1.  **Clone the Repository**:
 
-    bash
-
-    Copy code
-
     `git clone https://github.com/askarnku/vpcs_handson_terraform.git`
 
 2.  **Change Directory**:
 
-    bash
-
-    Copy code
-
     `cd vpcs_handson_terraform`
 
 3.  **Initialize Terraform**:
-
-    bash
-
-    Copy code
 
     `terraform init`
 
@@ -48,19 +36,11 @@ Before you begin, ensure you have the following:
 
 4.  **Plan the Infrastructure**:
 
-    bash
-
-    Copy code
-
     `terraform plan`
 
     This step will show you the infrastructure changes that will be made.
 
 5.  **Apply the Configuration**:
-
-    bash
-
-    Copy code
 
     `terraform apply`
 
@@ -72,21 +52,11 @@ Once the infrastructure is up, you can SSH into the EC2 instances to verify that
 
 - **SSH into EC2 Instances**: Use the SSH key you specified during the configuration to connect to your instances.
 
-  Example:
-
-  bash
-
-  Copy code
-
   `ssh -i /path/to/your-key.pem ec2-user@<public_ip_of_ec2_instance>`
 
 ## Cleanup
 
 After verifying the setup, you can destroy the infrastructure to avoid incurring charges:
-
-bash
-
-Copy code
 
 `terraform destroy`
 
