@@ -154,7 +154,7 @@ resource "aws_instance" "vpc_a_public_ec2" {
   instance_type   = "t2.micro"
   subnet_id       = aws_subnet.public-subnet-vpc-a.id            # Replace with your actual subnet ID
   key_name        = "id_ed25519"                                   # Replace with your actual key pair name
-  security_groups = [aws_security_group.sg_public_subnet_vpc_a.id] # Replace with your actual security group ID or name
+  vpc_security_group_ids = [aws_security_group.sg_public_subnet_vpc_a.id]
 
   tags = {
     Name = "public_ec2"
@@ -171,7 +171,7 @@ resource "aws_instance" "vpc_a_private_ec2" {
   instance_type   = "t2.micro"
   subnet_id       = aws_subnet.private-subnet-vpc-a.id # Replace with your actual subnet ID
   key_name        = "id_ed25519"
-  security_groups = [aws_security_group.sg_private_subnet_vpc_a.id]
+  vpc_security_group_ids = [aws_security_group.sg_private_subnet_vpc_a.id]
   tags = {
     Name = "private_ec2_vpc_a"
   }
