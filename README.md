@@ -28,8 +28,8 @@ Before you begin, ensure you have the following:
 
     `cd vpcs_handson_terraform`
 
-3.  **Private key name**
-    Enter private key name in file `variables.tf`
+3.  **SSH Private Key Configuration**
+    Specify the name of your SSH private key in the `variables.tf` file:
 
     ```h
     variable "private_key" {
