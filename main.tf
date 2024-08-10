@@ -234,4 +234,16 @@ resource "aws_vpc_peering_connection" "vpc_peering" {
 }
 
 # add route table rule for vpc-b private subnet to route traffic to vpc-a via peering connection
+resource "aws_route" "vpc_b_to_vpc_a" {
+  route_table_id         = aws_route_table.private_route_vpc_b.id
+  destination_cidr_block = aws_vpc.vpc_a.cidr_block
+  vpc_peering_connection_id = aws_vpc_peering_connection.vpc_peering.id
+}
+
+# add route table rule for vpc-a private subnet to route traffic to vpc-b via peering connection
+resource "aws_route" "vpc_a_to_vpc_b" {
+  route_table_id         = aws_route_table.private_route_vpc_a.id
+  destination_cidr_block = aws_vpc.vpc_b.cidr_block
+  vpc_peering_connection_id = aws_vpc_peering_connection.vpc_peering.id
+}
 
