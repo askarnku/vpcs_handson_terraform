@@ -69,4 +69,34 @@ resource "aws_route_table_association" "pub_assoc" {
   subnet_id = aws_subnet.public-subnet-vpc-a.id
 }
 
+# create instances on each vpc
+# -- configure security groups
+# vpc-a public subnet ingress and egress rules: Allow ssh traffic on port 22 outbound on all traffic
+
+resource "aws_security_group" "public_subnet_instance" {
+  name        = "allow_tls"
+  description = "Allow TLS inbound traffic from myip and all outbound traffic"
+  vpc_id = aws_vpc.vpc_a.id
+
+  tags = {
+    Name = "sg-vpc-a-public-subnet"
+  }
+}
+
+resource "aws_vpc_security_group_ingress_rule" "allow_tls_ipv4" {
+  security_group_id = aws_security_group.public_subnet_instance.id
+  cidr_ipv4         = "73.22.26.89/32"
+  from_port         = 22
+  ip_protocol       = "tcp"
+  to_port           = 22
+}
+
+resource "aws_vpc_security_group_egress_rule" "allow_tls_ipv4" {
+  security_group_id = aws_security_group.public_subnet_instance.id
+  cidr_ipv4         = "0.0.0.0/0"
+  from_port         = 0
+  ip_protocol       = -1
+  to_port           = 0
+}
+
 
