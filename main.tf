@@ -73,30 +73,67 @@ resource "aws_route_table_association" "pub_assoc" {
 # -- configure security groups
 # vpc-a public subnet ingress and egress rules: Allow ssh traffic on port 22 outbound on all traffic
 
-resource "aws_security_group" "public_subnet_instance" {
-  name        = "allow_tls"
+# Create security group for public VPC-A subnet
+resource "aws_security_group" "public_subnet_instance_vpc_a" {
+  name        = "allow_tls_for_public"
   description = "Allow TLS inbound traffic from myip and all outbound traffic"
-  vpc_id = aws_vpc.vpc_a.id
+  vpc_id      = aws_vpc.vpc_a.id
+
+    lifecycle {
+    create_before_destroy = false  # We want to destroy the existing SG before creating a new one
+  }
 
   tags = {
     Name = "sg-vpc-a-public-subnet"
   }
 }
 
-resource "aws_vpc_security_group_ingress_rule" "allow_tls_ipv4" {
-  security_group_id = aws_security_group.public_subnet_instance.id
-  cidr_ipv4         = "73.22.26.89/32"
+# Ingress rule allowing traffic from a specific IP address (SSH as an example)
+resource "aws_security_group_rule" "inbound_myip" {
+  type              = "ingress"
+  security_group_id = aws_security_group.public_subnet_instance_vpc_a.id
+  cidr_blocks       = ["73.22.26.89/32"]
+  from_port         = 22
+  to_port           = 22
+  protocol          = "tcp"
+}
+
+# Egress rule allowing all outbound traffic
+resource "aws_security_group_rule" "outbound_to_all" {
+  type              = "egress"
+  security_group_id = aws_security_group.public_subnet_instance_vpc_a.id
+  cidr_blocks       = ["0.0.0.0/0"]
+  from_port         = 0
+  to_port           = 10000
+  protocol          = "-1"
+}
+
+# create security group for private sub in vpc-a
+resource "aws_security_group" "private_subnet_instance_vpc-a" {
+  name        = "allow_tls_for_private"
+  description = "Allow TLS inbound traffic from vpc-a public sub"
+  vpc_id = aws_vpc.vpc_a.id
+
+    lifecycle {
+    create_before_destroy = false  # We want to destroy the existing SG before creating a new one
+  }
+
+  tags = {
+    Name = "sg-vpc-a-private-subnet"
+  }
+}
+
+resource "aws_vpc_security_group_ingress_rule" "inbound_from_vpc_a_public" {
+  security_group_id = aws_security_group.private_subnet_instance_vpc-a.id
+  cidr_ipv4         = "10.100.1.0/24"
   from_port         = 22
   ip_protocol       = "tcp"
   to_port           = 22
 }
 
-resource "aws_vpc_security_group_egress_rule" "allow_tls_ipv4" {
-  security_group_id = aws_security_group.public_subnet_instance.id
-  cidr_ipv4         = "0.0.0.0/0"
-  from_port         = 0
-  ip_protocol       = -1
-  to_port           = 0
+resource "aws_vpc_security_group_egress_rule" "outboudn_to_vpc_b" {
+  security_group_id = aws_security_group.private_subnet_instance_vpc-a.id
+  cidr_ipv4         = "10.200.10.0/24"
+  ip_protocol       = "-1"
 }
-
 
