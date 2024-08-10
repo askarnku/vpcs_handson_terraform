@@ -1,64 +1,93 @@
-VPCs Hands-On with Terraform
-This repository contains a Terraform configuration to set up two VPCs (VPC-A and VPC-B), each with its own subnets and EC2 instances, connected via a VPC peering connection. This setup is designed to demonstrate creating and managing AWS infrastructure using Terraform.
+# VPCs Hands-On with Terraform
 
-Prerequisites
+This repository contains a Terraform configuration to set up two VPCs (`VPC-A` and `VPC-B`), each with its own subnets and EC2 instances, connected via a VPC peering connection. This setup is designed to demonstrate creating and managing AWS infrastructure using Terraform.
+
+## Prerequisites
+
 Before you begin, ensure you have the following:
 
-Terraform: Install Terraform via Homebrew.
+1.  **Terraform**: Install Terraform via Homebrew.
 
-You can install it by running: brew install terraform.
-AWS Access Keys: Set up your AWS Access Key ID and Secret Access Key.
+    - You can install it by running: `brew install terraform`.
 
-These credentials are needed to authenticate Terraform with your AWS account.
-AWS CLI: Install the AWS CLI and configure it with your AWS Access Key ID and Secret Access Key.
+2.  **AWS Access Keys**: Set up your AWS Access Key ID and Secret Access Key.
 
-This is necessary for managing AWS resources from the command line.
-Steps to Deploy
-Clone the Repository:
+    - These credentials are needed to authenticate Terraform with your AWS account.
 
-bash
-Copy code
-git clone https://github.com/askarnku/vpcs_handson_terraform.git
-Change Directory:
+3.  **AWS CLI**: Install the AWS CLI and configure it with your AWS Access Key ID and Secret Access Key.
 
-bash
-Copy code
-cd vpcs_handson_terraform
-Initialize Terraform:
+    - This is necessary for managing AWS resources from the command line.
 
-bash
-Copy code
-terraform init
-This will download and install the necessary provider plugins.
+## Steps to Deploy
 
-Plan the Infrastructure:
+1.  **Clone the Repository**:
 
-bash
-Copy code
-terraform plan
-This step will show you the infrastructure changes that will be made.
+    bash
 
-Apply the Configuration:
+    Copy code
 
-bash
-Copy code
-terraform apply
-Confirm the action when prompted. This will create the infrastructure as defined in the Terraform configuration.
+    `git clone https://github.com/askarnku/vpcs_handson_terraform.git`
 
-Post-Deployment
+2.  **Change Directory**:
+
+    bash
+
+    Copy code
+
+    `cd vpcs_handson_terraform`
+
+3.  **Initialize Terraform**:
+
+    bash
+
+    Copy code
+
+    `terraform init`
+
+    This will download and install the necessary provider plugins.
+
+4.  **Plan the Infrastructure**:
+
+    bash
+
+    Copy code
+
+    `terraform plan`
+
+    This step will show you the infrastructure changes that will be made.
+
+5.  **Apply the Configuration**:
+
+    bash
+
+    Copy code
+
+    `terraform apply`
+
+    Confirm the action when prompted. This will create the infrastructure as defined in the Terraform configuration.
+
+## Post-Deployment
+
 Once the infrastructure is up, you can SSH into the EC2 instances to verify that everything is working as expected.
 
-SSH into EC2 Instances: Use the SSH key you specified during the configuration to connect to your instances.
+- **SSH into EC2 Instances**: Use the SSH key you specified during the configuration to connect to your instances.
 
-Example:
+  Example:
 
-bash
-Copy code
-ssh -i /path/to/your-key.pem ec2-user@<public_ip_of_ec2_instance>
-Cleanup
+  bash
+
+  Copy code
+
+  `ssh -i /path/to/your-key.pem ec2-user@<public_ip_of_ec2_instance>`
+
+## Cleanup
+
 After verifying the setup, you can destroy the infrastructure to avoid incurring charges:
 
 bash
+
 Copy code
-terraform destroy
+
+`terraform destroy`
+
 This command will remove all the resources that were created.
