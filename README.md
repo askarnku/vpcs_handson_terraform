@@ -28,19 +28,31 @@ Before you begin, ensure you have the following:
 
     `cd vpcs_handson_terraform`
 
-3.  **Initialize Terraform**:
+3.  **Private key name**
+    Enter private key name in file `variables.tf`
+
+    ```h
+    variable "private_key" {
+        description = "The private to use for SSH access"
+        type = string
+        default = "<enter_your_key_name_here>"
+    }
+
+    ```
+
+4.  **Initialize Terraform**:
 
     `terraform init`
 
     This will download and install the necessary provider plugins.
 
-4.  **Plan the Infrastructure**:
+5.  **Plan the Infrastructure**:
 
     `terraform plan`
 
     This step will show you the infrastructure changes that will be made.
 
-5.  **Apply the Configuration**:
+6.  **Apply the Configuration**:
 
     `terraform apply`
 

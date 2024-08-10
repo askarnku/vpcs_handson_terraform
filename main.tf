@@ -183,7 +183,7 @@ resource "aws_instance" "vpc_a_public_ec2" {
   ami             = "ami-0ae8f15ae66fe8cda" # Replace with the appropriate AMI ID for your region
   instance_type   = "t2.micro"
   subnet_id       = aws_subnet.public-subnet-vpc-a.id            # Replace with your actual subnet ID
-  key_name        = "id_ed25519"                                   # Replace with your actual key pair name
+  key_name        = var.private_key                                  # Replace with your actual key pair name
   vpc_security_group_ids = [aws_security_group.sg_public_subnet_vpc_a.id]
 
   tags = {
@@ -197,7 +197,7 @@ resource "aws_instance" "vpc_a_private_ec2" {
   ami             = "ami-0ae8f15ae66fe8cda" # Replace with the appropriate AMI ID for your region
   instance_type   = "t2.micro"
   subnet_id       = aws_subnet.private-subnet-vpc-a.id # Replace with your actual subnet ID
-  key_name        = "id_ed25519"
+  key_name        = var.private_key
   vpc_security_group_ids = [aws_security_group.sg_private_subnet_vpc_a.id]
   tags = {
     Name = "private_ec2_vpc_a"
@@ -209,7 +209,7 @@ resource "aws_instance" "vpc_b_private_ec2" {
   ami             = "ami-0ae8f15ae66fe8cda" # Replace with the appropriate AMI ID for your region
   instance_type   = "t2.micro"
   subnet_id       = aws_subnet.private-subnet-vpc_b.id # Replace with your actual subnet ID
-  key_name        = "id_ed25519"
+  key_name        = var.private_key
   vpc_security_group_ids = [aws_security_group.sg_private_subnet_vpc_b.id]
   tags = {
     Name = "private_ec2_vpc_b"
