@@ -52,7 +52,9 @@ Once the infrastructure is up, you can SSH into the EC2 instances to verify that
 
 - **SSH into EC2 Instances**: Use the SSH key you specified during the configuration to connect to your instances.
 
-  `ssh -i /path/to/your-key.pem ec2-user@<public_ip_of_ec2_instance>`
+  `ssh -i /path/to/your-key.pem ec2-user@<ec2_instance_public_or_private_ip> -A`
+
+  (`-A` option forwards or chains private key from instance to instance)
 
 ## Cleanup
 
