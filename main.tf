@@ -190,10 +190,6 @@ resource "aws_instance" "vpc_a_public_ec2" {
     Name = "public_ec2"
   }
 
-  lifecycle {
-    prevent_destroy = true
-  }
-
 }
 
 # create ec2 for vpc-a private subnet
@@ -206,9 +202,6 @@ resource "aws_instance" "vpc_a_private_ec2" {
   tags = {
     Name = "private_ec2_vpc_a"
   }
-  lifecycle {
-    prevent_destroy = true
-  }
 }
 
 # create ec2 for vpc-b private subnet
@@ -220,9 +213,6 @@ resource "aws_instance" "vpc_b_private_ec2" {
   vpc_security_group_ids = [aws_security_group.sg_private_subnet_vpc_b.id]
   tags = {
     Name = "private_ec2_vpc_b"
-  }
-  lifecycle {
-    prevent_destroy = true
   }
 }
 
