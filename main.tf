@@ -3,8 +3,8 @@ provider "aws" {
   region = "us-east-1"
 }
 
-data "http" "my_public_ip" {
-  url = "https://api.ipify.org?format=text"
+data "http" "myip" {
+  url = "https://ipv4.icanhazip.com"
 }
 
 # vpc comprised of 2 subnets (public and private)
@@ -117,7 +117,7 @@ resource "aws_security_group" "sg_public_subnet_vpc_a" {
     from_port   = 22
     to_port     = 22
     protocol    = "tcp"
-    cidr_blocks = ["${data.http.my_public_ip.body}/32"] # Open to the world (use carefully)
+    cidr_blocks = ["${chomp(data.http.myip.response_body)}/32"] 
   }
 
   egress {
