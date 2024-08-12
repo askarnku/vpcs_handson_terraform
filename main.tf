@@ -3,6 +3,10 @@ provider "aws" {
   region = "us-east-1"
 }
 
+data "http" "my_public_ip" {
+  url = "https://api.ipify.org?format=text"
+}
+
 # vpc comprised of 2 subnets (public and private)
 resource "aws_vpc" "vpc_a" {
   cidr_block = "10.100.0.0/16"
@@ -113,7 +117,7 @@ resource "aws_security_group" "sg_public_subnet_vpc_a" {
     from_port   = 22
     to_port     = 22
     protocol    = "tcp"
-    cidr_blocks = ["73.22.26.89/32"] # Open to the world (use carefully)
+    cidr_blocks = ["${data.http.my_public_ip.body}/32"] # Open to the world (use carefully)
   }
 
   egress {
