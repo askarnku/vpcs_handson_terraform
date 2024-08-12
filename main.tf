@@ -4,7 +4,7 @@ provider "aws" {
 }
 
 data "http" "myip" {
-  url = " https://ipinfo.io/ip"
+  url = "https://ipinfo.io/ip"
 }
 
 # vpc comprised of 2 subnets (public and private)

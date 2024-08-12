@@ -2,3 +2,5 @@
 terraform.tfstate
 terraform.tfstate.backup
 copy_main.tf
+scratch.txt
+/venv
